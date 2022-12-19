@@ -1,3 +1,20 @@
 <h1>{{title}}</h1>
 
 <meu-primeiro-component></meu-primeiro-component>
+<div class="row col-3" style="margin-left: 10px;">
+            <!-- declara a variavel local 'a'-->
+	<select class="form-select" #a (change)="0"> 
+		<option value="warning">warning</option>
+		<option value="info">info</option>
+		<option value="success">success</option>
+	</select>
+
+     {{a.value}}
+
+        <p>     
+            <!-- pega o valor da variavel local e mudar a classe         -->
+            <ngb-alert  [type]="a.value" [dismissible]="false">
+                <strong>Warning!</strong> Better check yourself, you're not looking too good.
+            </ngb-alert>
+        </p>
+	</div>
