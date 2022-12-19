@@ -7,7 +7,8 @@ import { Component } from '@angular/core';
 })
 export class CursosComponent {
 
- 
+ nome: string = 'Aldeir';
+ img: any ='vai uma imagens';
 
   constructor() { 
 
