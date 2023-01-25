@@ -7,6 +7,7 @@ import { InputOutputPropertiesComponent } from './input-output-properties/input-
 import { OutputPropertiesComponent } from './output-properties/output-properties.component';
 import { FundoAmareloDirective } from './shared/fundo-amarelo.directive';
 import { DiretivasCustomizadasComponent } from './diretivas-customizadas/diretivas-customizadas.component';
+import { HighlightMouseDirective } from './shared/highlight-mouse.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,9 @@ import { DiretivasCustomizadasComponent } from './diretivas-customizadas/diretiv
     InputOutputPropertiesComponent,
     OutputPropertiesComponent,
     FundoAmareloDirective,
-    DiretivasCustomizadasComponent
+    DiretivasCustomizadasComponent,
+    HighlightMouseDirective
+   
   ],
   imports: [
     BrowserModule
