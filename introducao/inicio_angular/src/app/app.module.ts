@@ -8,7 +8,7 @@ import { OutputPropertiesComponent } from './output-properties/output-properties
 import { FundoAmareloDirective } from './shared/fundo-amarelo.directive';
 import { DiretivasCustomizadasComponent } from './diretivas-customizadas/diretivas-customizadas.component';
 import { HighlightMouseDirective } from './shared/highlight-mouse.directive';
-
+import { PessoaService } from './shared/pessoaService';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +23,7 @@ import { HighlightMouseDirective } from './shared/highlight-mouse.directive';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [PessoaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
