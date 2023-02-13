@@ -1,1 +1,6 @@
 <p style="margin-left: 50%;">cursos works!</p>
+
+<mat-list *ngFor="let cur of curso">
+    <mat-list-item  role="cur"> <a [routerLink]="['curso',':id' ]"></a></mat-list-item>
+   
+  </mat-list>

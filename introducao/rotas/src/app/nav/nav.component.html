@@ -10,6 +10,9 @@
         <a mat-list-item routerLink="login"> 
             Login
         </a>
+        <a mat-list-item [routerLink]="['curso',':id' ]"> 
+          Curso com id
+      </a>
         <a mat-list-item routerLink="curso"> 
             Curso
         </a>
@@ -19,7 +22,7 @@
      </mat-drawer>
 
 
-        <button class="menu mat-elevation-z8"  (click)="drawer.toggle()" mat-icon-button>
+        <button class="menu mat-elevation-z8" routerLink=""  (click)="drawer.toggle()" mat-icon-button>
           <mat-icon>menu</mat-icon>
         </button>
 
