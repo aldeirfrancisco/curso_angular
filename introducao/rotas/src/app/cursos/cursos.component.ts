@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CursosService } from './cursos.service';
 
 @Component({
@@ -18,3 +18,4 @@ export class CursosComponent {
      this.router.navigate(['curso/'+id]); 
   }
 }
+
