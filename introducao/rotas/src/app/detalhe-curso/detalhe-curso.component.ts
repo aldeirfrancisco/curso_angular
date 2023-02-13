@@ -27,7 +27,7 @@ export class DetalheCursoComponent implements OnInit {
     })
 
     this.getCurso(); 
-    console.log(this.inscricao);
+
   }
 
   getCurso(){
