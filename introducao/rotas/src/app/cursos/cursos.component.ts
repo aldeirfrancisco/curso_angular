@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CursosService } from './cursos.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { CursosService } from './cursos.service';
 export class CursosComponent {
   curso: any;
 
-  constructor(private cursos : CursosService ){
+  constructor(private cursos : CursosService, private router: Router){
      this.curso = cursos.getCursos();
+  }
+
+  selecionado(id: any): void {
+     this.router.navigate(['curso/'+id]); 
   }
 }

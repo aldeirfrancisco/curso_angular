@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CursosService } from '../cursos/cursos.service';
+
 
 @Component({
   selector: 'app-detalhe-curso',
@@ -9,18 +11,38 @@ import { ActivatedRoute } from '@angular/router';
 export class DetalheCursoComponent implements OnInit {
 
   id: number = 1;
-  curso: any;
-  constructor(private route: ActivatedRoute){
+  curso: any = {};
+  Cursos: any[] = [];
+  inscricao: any;
+  constructor(private route: ActivatedRoute, private cursos : CursosService){
     console.log(this.route);
     
   }
 
   ngOnInit() {
-    this.route.params.subscribe(
+
+    this.inscricao = this.route.params.subscribe(
       (params: any) => {
       this.id = params['id']
     })
+
+    this.getCurso(); 
+    console.log(this.inscricao);
   }
 
-  ngOnDestroy(){}
+  getCurso(){
+
+    this.Cursos = this.cursos.getCursos()
+    for (let i = 0; i < this.Cursos.length; i++) {
+      const element = this.Cursos[i];
+        if(element.id == this.id){
+          this.curso = element
+        }  
+    } 
+  }
+
+  ngOnDestroy(){
+
+
+  }
 }
