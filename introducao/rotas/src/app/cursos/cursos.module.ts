@@ -5,7 +5,7 @@ import { MatListModule } from "@angular/material/list";
 import { AppRoutingModule } from "../app-routing.module";
 
 import { CursosComponent } from "./cursos.component";
-import { CursosRoutingModule } from "./cursos.routing.module";
+// import { CursosRoutingModule } from "./cursos.routing.module";
 import { CursosService } from "./cursos.service";
 import { DetalheCursoComponent } from "./detalhe-curso/detalhe-curso.component";
 
@@ -15,7 +15,7 @@ import { DetalheCursoComponent } from "./detalhe-curso/detalhe-curso.component";
         FormsModule,
         AppRoutingModule,
         MatListModule,
-        CursosRoutingModule
+        // CursosRoutingModule
     ],
     exports: [],
     declarations: [
