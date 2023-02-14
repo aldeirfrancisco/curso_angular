@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CursosComponent } from './cursos/cursos.component';
 import { NavComponent } from './nav/nav.component';
-import { DetalheCursoComponent } from './detalhe-curso/detalhe-curso.component';
+import { DetalheCursoComponent } from './cursos/detalhe-curso/detalhe-curso.component';
 
 @NgModule({
   declarations: [
