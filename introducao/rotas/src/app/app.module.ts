@@ -23,7 +23,7 @@ import { CursosModule } from './cursos/cursos.module';
     LoginComponent,
   
     NavComponent,
-
+  
   ],
   imports: [
     BrowserModule,
