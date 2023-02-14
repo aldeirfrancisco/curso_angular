@@ -11,7 +11,7 @@ export class CursosComponent {
   curso: any;
 
   constructor(private cursos : CursosService, private router: Router){
-     this.curso = cursos.getCursos();
+     this.curso = this.cursos.getCursos();
   }
 
   selecionado(id: any): void {
