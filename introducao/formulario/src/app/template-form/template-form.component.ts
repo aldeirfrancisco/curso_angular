@@ -7,9 +7,17 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./template-form.component.css']
 })
 export class TemplateFormComponent {
+    
+  //[(ngModel)] two-way data binding, muda o objeto original 
+  //[ngModel] property binding, não muda o objeto original
 
+  pessoa: any = {
+    nome: "aldeir",
+    email: "dide123francisco@gmail.com"
+  }
   onSubmit(form:NgForm): void{
   console.log("aqui ",form);
+  console.log("pessoa ",this.pessoa);
   
   }
 }
