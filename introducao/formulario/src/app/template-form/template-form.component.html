@@ -2,13 +2,13 @@
     <div class="form-group ">
         <label for="nome" class="form-label">Nome</label>
         <input type="text" [(ngModel)]="pessoa.nome" name="nome" class="form-control" id="nome"
-         placeholder="nome">
+         placeholder="nome" required>
     </div>
 
     <div class="form-group ">
         <label for="email" class="form-label">E-mail</label>
         <input type="email"[(ngModel)]="pessoa.email" name="email" class="form-control " id="email"
-         placeholder="nome@email.com">
+         placeholder="nome@email.com" required>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
