@@ -1,4 +1,4 @@
-<form #f ="ngForm" class="needs-validation" novalidate>
+<form #f ="ngForm"  class="form-horizontal">
     
 
     <div class="form-group  col-sm-12 ">
@@ -6,7 +6,6 @@
         <input type="text" [(ngModel)]="pessoa.nome" name="nome" 
          class="form-control" id="nome" aria-describedby="nome"
          placeholder="nome" required="" #nome="ngModel">
-
     </div>
 
     <div   *ngIf="!nome.valid && nome.touched" class="alert alert-danger" role="alert">
@@ -28,7 +27,7 @@
             <div class="form-group col-md-3">
                 <label for="cep" class="form-label">CEP</label>
                 <input type="text" id="cep" class="form-control" ngModel name= "cep" required 
-                 #cep="ngModel" (blur)="consultaCEP(cep.value)">
+                 #cep="ngModel" (blur)="consultaCEP(cep.value,f)">
                 
                 <div *ngIf="!cep.valid && cep.touched" class="alert alert-danger" role="alert">
                     CEP é obrigatório.
@@ -47,14 +46,14 @@
             <div class="col-md-6">
                 <label for="complemento" class="form-label">Complemento</label>
                 <input type="text" id="complemento" class="form-control" ngModel name= "complemento">
-
             </div>
         </div>
         
         <div class="form-group">
             <label for="rua" class="form-label">Rua</label>
-            <input type="text" id="rua" class="form-control" ngModel name= "rua"
-            required  #rua="ngModel" readonly>
+            <input  type="text" id="rua"  class="form-control endereco" 
+             ngModel name= "rua" 
+            required  #rua="ngModel"  readonly>
             
             <div *ngIf="!rua.valid && rua.touched" class="alert alert-danger" role="alert">
                 Rua é obrigatório.
@@ -65,7 +64,7 @@
         <div class="row">
             <div class="col-md-5">
                 <label for="bairro" class="form-label">Bairro</label>
-                <input type="text" id="bairro" class="form-control" ngModel name= "bairro" required  #bairro="ngModel">
+                <input readonly type="text" id="bairro" class="form-control" ngModel name= "bairro" required  #bairro="ngModel">
                 
                 <div *ngIf="!bairro.valid && bairro.touched" class="alert alert-danger" role="alert">
                     Bairro é obrigatório.
@@ -73,7 +72,7 @@
             </div>
 
             <div class="col-md-4">
-                <label for="cidade" class="form-label">Cidade</label>
+                <label for="cidade" readonly class="form-label">Cidade</label>
                 <input type="text" id="cidade" class="form-control" ngModel name= "cidade" required  #cidade="ngModel">
                 
                 <div *ngIf="!cidade.valid && cidade.touched" class="alert alert-danger" role="alert">
@@ -82,7 +81,7 @@
             </div>
 
             <div class="col-md-3">
-                <label for="estado" class="form-label">Estado</label>
+                <label for="estado" readonly class="form-label">Estado</label>
                 <input type="text" id="estado" class="form-control" ngModel name= "estado" #estado="ngModel">
                 <div *ngIf="!estado.valid && estado.touched" class="alert alert-danger" role="alert">
                     Cidade é obrigatório.

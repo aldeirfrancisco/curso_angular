@@ -24,20 +24,17 @@ export class TemplateFormComponent implements OnInit{
  
   }
 
-  consultaCEP(cep: any): void {
-    
+  consultaCEP(cep: any, form:NgForm): void {
+     
+   
     cep = cep.replace(/\D/g, '');
     if (cep != "") {
       var validacep = /^[0-9]{8}$/;
 
       if(validacep.test(cep)) {
-        console.log(cep);
-        this.http.get(`https://viacep.com.br/ws/${cep}/json`).subscribe(
-          (endereco) => {
-            console.log(endereco);
-            
-          }
-        )
+        this.resetaDadosFormulario(form);
+        this.http.get(`https://viacep.com.br/ws/${cep}/json`)
+          .subscribe((endereco) => this.populaDadosForm(endereco, form));
       }
 
 
@@ -45,23 +42,52 @@ export class TemplateFormComponent implements OnInit{
 
   }
   
+  populaDadosForm(dados: any, formulario:NgForm){
+
+       formulario.form.patchValue(
+          {
+              cep: dados.cep,
+              numero: '',
+              complemento: dados.complemento ,
+              rua: dados.logradouro,
+              bairro: dados.bairro,
+              cidade: dados.localidade,
+              estado: dados.uf
+  
+          }
+       )
+  }
+
+  resetaDadosFormulario(form: any ){
+    form.form.patchValue(
+      {
+          numero: '',
+          complemento: null ,
+          rua: null,
+          bairro: null,
+          cidade: null,
+          estado:null
+
+      }
+   )
+  }
   ngOnInit(){
-  (() => {
+  // (() => {
      
-    const forms = document.querySelectorAll('.needs-validation')
+  //   const forms = document.querySelectorAll('.needs-validation')
   
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
+  //   Array.from(forms).forEach(form => {
+  //     form.addEventListener('submit', event => {
      
-        if (!form) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+  //       if (!form) {
+  //         event.preventDefault()
+  //         event.stopPropagation()
+  //       }
   
-       form.classList.add('was-validated')
-      }, false)
-    })
-  })()
+  //      form.classList.add('was-validated')
+  //     }, false)
+  //   })
+  // })()
  }
   
 }
