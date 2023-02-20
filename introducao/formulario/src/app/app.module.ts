@@ -11,7 +11,8 @@ import { DataFormComponent } from './data-form/data-form.component';
   declarations: [
     AppComponent,
    
-    DataFormComponent
+    DataFormComponent,
+        
   ],
   imports: [
     BrowserModule,
