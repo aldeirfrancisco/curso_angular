@@ -17,7 +17,7 @@ export class TemplateFormComponent {
   }
   onSubmit(form:NgForm): void{
   console.log("aqui ",form);
-  console.log("pessoa ",this.pessoa);
+  
   
   }
 }
