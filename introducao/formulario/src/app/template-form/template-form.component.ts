@@ -30,7 +30,7 @@ export class TemplateFormComponent implements OnInit{
     cep = cep.replace(/\D/g, '');
     if (cep != "") {
       var validacep = /^[0-9]{8}$/;
-
+       
       if(validacep.test(cep)) {
         this.resetaDadosFormulario(form);
         this.http.get(`https://viacep.com.br/ws/${cep}/json`)
