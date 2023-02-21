@@ -29,6 +29,25 @@ export class DataFormComponent implements OnInit {
     resetar():void{
       this.formulario.reset();
     }
+   verificaValidTouched(campo:string){
+    return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
+   }
+    aplicaCssErroInvalid(campo:string): any{
+      return {
+        'is-invalid': this.verificaValidTouched(campo),
+      }
+    }
+    aplicaCssErroinvalidFeedback(campo:string): any{
+      return {
+        'invalid-feedback': !this.verificaValidTouched(campo),
+      }
+    }
+    verificaEmailInvalido(){
+      let erroEmail = this.formulario.get('email');
+      if(erroEmail?.errors){
+        return erroEmail.errors['email'] && erroEmail.touched;
+      }
+    }
   ngOnInit() {
   // this.formulario  = new FormGroup({
   //   nome: new FormControl(null),
