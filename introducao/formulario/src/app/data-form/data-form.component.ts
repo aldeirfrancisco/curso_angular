@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data-form',
@@ -13,16 +13,16 @@ export class DataFormComponent implements OnInit {
 
   constructor(private  formBuilder: FormBuilder, private http: HttpClient){
     this.formulario = this.formBuilder.group({
-      nome: [null],
-      email:[null]
+      nome: [null, Validators.required],
+      email:[null, [Validators.required, Validators.email]]
     })
   }
   onSubmit(): void{
-    console.log("aqui ",this.formulario.value);
-    this.http.get(`https://vaiacep.com.br/ws/${71555013}/json`)
+    console.log("aqui ",this.formulario);
+    this.http.get(`https://viacep.com.br/ws/${71555013}/json`)
     .subscribe((endereco) => {
       console.log(endereco)
-      this.formulario.reset();
+      // this.formulario.reset();
     }, (error: any)=> alert("error"));
     }
 
