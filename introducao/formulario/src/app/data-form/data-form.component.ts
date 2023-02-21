@@ -19,8 +19,15 @@ export class DataFormComponent implements OnInit {
   }
   onSubmit(): void{
     console.log("aqui ",this.formulario.value);
-    this.http.get(`https://viacep.com.br/ws/${71555013}/json`)
-    .subscribe((endereco) => console.log(endereco));
+    this.http.get(`https://vaiacep.com.br/ws/${71555013}/json`)
+    .subscribe((endereco) => {
+      console.log(endereco)
+      this.formulario.reset();
+    }, (error: any)=> alert("error"));
+    }
+
+    resetar():void{
+      this.formulario.reset();
     }
   ngOnInit() {
   // this.formulario  = new FormGroup({
