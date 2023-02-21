@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DataFormComponent } from './data-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -12,7 +13,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
     
   ]
 })
