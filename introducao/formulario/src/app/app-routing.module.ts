@@ -10,7 +10,7 @@ const routes: Routes = [
 
     {path: 'tempateForm', component: TemplateFormComponent},
     {path: 'dataForm', component: DataFormComponent},
-    {path: '', component: TemplateFormComponent}
+    {path: '', component: DataFormComponent}
 
 ];
 
