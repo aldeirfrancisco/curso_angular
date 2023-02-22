@@ -14,7 +14,16 @@ export class DataFormComponent implements OnInit {
   constructor(private  formBuilder: FormBuilder, private http: HttpClient){
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      email:[null, [Validators.required, Validators.email]]
+      email:[null, [Validators.required, Validators.email]],
+      endereco: this.formBuilder.group({
+          cep: [null, Validators.required],
+          numero:[null, Validators.required],
+          complemento:[null],
+          rua:[null, Validators.required],
+          bairro:[null, Validators.required],
+          cidade: [null, Validators.required],
+          estado: [null, Validators.required]
+      })
     })
   }
   onSubmit(): void{
@@ -32,12 +41,12 @@ export class DataFormComponent implements OnInit {
    verificaValidTouched(campo:string){
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
    }
-    aplicaCssErroInvalid(campo:string): any{
+    aplicaCssErroInvalid(campo: string): any{
       return {
         'is-invalid': this.verificaValidTouched(campo),
       }
     }
-    aplicaCssErroinvalidFeedback(campo:string): any{
+    aplicaCssErroinvalidFeedback(campo: string): any{
       return {
         'invalid-feedback': !this.verificaValidTouched(campo),
       }
