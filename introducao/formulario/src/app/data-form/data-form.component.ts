@@ -73,12 +73,28 @@ export class DataFormComponent implements OnInit {
     })
   }
   onSubmit(): void{
-    console.log("aqui ",this.formulario);
-    this.http.get(`https://viacep.com.br/ws/${71555013}/json`)
-    .subscribe((endereco) => {
-      console.log(endereco)
-      // this.formulario.reset();
-    }, (error: any)=> alert("error"));
+    if(this.formulario.valid){
+        this.http.get(`https://viacep.com.br/ws/${71555013}/json`)
+        .subscribe((endereco) => {
+          console.log(endereco)
+          // this.formulario.reset();
+        }, (error: any)=> alert("error"));
+   
+     } else {
+      console.log("invalid");
+      this.verificaValidacoesForm(this.formulario);
+      
+     }
+  }
+    
+    verificaValidacoesForm(formGrupo: FormGroup){
+        Object.keys(formGrupo.controls).forEach(campo =>{
+          let controle = formGrupo.get(campo);
+          controle?.markAsTouched();
+          if(controle instanceof FormGroup){
+            this.verificaValidacoesForm(controle);
+          }
+        })
     }
 
     resetar():void{
