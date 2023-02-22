@@ -1,3 +1,5 @@
+import { Estadosbr } from './../shared/models/estadosbr';
+import { DropdownService } from './../shared/servicoes/dropdown.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,10 +10,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./data-form.component.css']
 })
 export class DataFormComponent implements OnInit {
-    
-  formulario: FormGroup;
 
-  constructor(private  formBuilder: FormBuilder, private http: HttpClient){
+  formulario: FormGroup;
+   estados: Estadosbr[] = [];
+
+  constructor(private  formBuilder: FormBuilder,
+              private http: HttpClient,
+              private dropdDownService: DropdownService){
+
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
       email:[null, [Validators.required, Validators.email]],
@@ -28,13 +34,13 @@ export class DataFormComponent implements OnInit {
   }
 
   consultaCEP(): void {
-     
+
    let cep = this.formulario.get('endereco.cep')?.value;
    this.resetaDadosFormulario();
     cep = cep.replace(/\D/g, '');
     if (cep != "") {
       var validacep = /^[0-9]{8}$/;
-       
+
       if(validacep.test(cep)) {
         // this.resetaDadosFormulario(form);
         this.http.get(`https://viacep.com.br/ws/${cep}/json`)
@@ -79,14 +85,14 @@ export class DataFormComponent implements OnInit {
           console.log(endereco)
           // this.formulario.reset();
         }, (error: any)=> alert("error"));
-   
+
      } else {
       console.log("invalid");
       this.verificaValidacoesForm(this.formulario);
-      
+
      }
   }
-    
+
     verificaValidacoesForm(formGrupo: FormGroup){
         Object.keys(formGrupo.controls).forEach(campo =>{
           let controle = formGrupo.get(campo);
@@ -124,5 +130,7 @@ export class DataFormComponent implements OnInit {
   //   nome: new FormControl(null),
   //   email: new FormControl(null)
   // });
+    this.dropdDownService.getEstados()
+      .subscribe(estados => this.estados = estados);
   }
 }
