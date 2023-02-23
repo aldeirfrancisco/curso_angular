@@ -15,6 +15,7 @@ export class DataFormComponent implements OnInit {
 
   formulario: FormGroup;
    estados: Estadosbr[] = [];
+   cargos: any[] = [];
 
   constructor(private  formBuilder: FormBuilder,
               private dropdDownService: DropdownService,
@@ -31,19 +32,20 @@ export class DataFormComponent implements OnInit {
           bairro:[null, Validators.required],
           cidade: [null, Validators.required],
           estado: [null, Validators.required]
-      })
+      }),
+      cargo: [null]
     })
   }
 
   consultaCEP(): void {
 
-   let cep = this.formulario.get('endereco.cep')?.value;
+      let cep = this.formulario.get('endereco.cep')?.value;
         this.resetaDadosFormulario();
           if(cep != null || cep !== ''){
           this.cepService.consultaCEP(cep)
               .subscribe((endereco) => this.populaDadosForm(endereco));
           }
-      }
+  }
 
 
   populaDadosForm(dados: any){
@@ -120,6 +122,12 @@ export class DataFormComponent implements OnInit {
         return erroEmail.errors['email'] && erroEmail.touched;
       }
     }
+
+    compararCargos(obj1: any, obj2:any) {
+      return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+    }
+
+
   ngOnInit() {
   // this.formulario  = new FormGroup({
   //   nome: new FormControl(null),
@@ -127,5 +135,8 @@ export class DataFormComponent implements OnInit {
   // });
     this.dropdDownService.getEstados()
       .subscribe(estados => this.estados = estados);
+      this.cargos = this.dropdDownService.getCargos();
+      console.log(this.cargos);
+
   }
 }
