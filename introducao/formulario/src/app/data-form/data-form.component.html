@@ -1,5 +1,5 @@
 <form  class="form-horizontal"  [formGroup]="formulario" (ngSubmit)="onSubmit()" >
-    
+
 
     <div class="form-group  col-sm-12 ">
         <label for="nome" class="form-label">Nome</label>
@@ -9,17 +9,17 @@
     </div>
 
     <div [ngClass]="aplicaCssErroinvalidFeedback('nome')"  class="alert alert-danger" role="alert">
-        Nome é obrigatório. 
+        Nome é obrigatório.
     </div>
 
     <div class="form-group  col-sm-12">
         <label for="email" class="form-label">E-mail</label>
         <input type="email"  formControlName="email" class="form-control "
-         [ngClass]="aplicaCssErroInvalid('email')" id="email" 
+         [ngClass]="aplicaCssErroInvalid('email')" id="email"
          placeholder="nome@email.com">
     </div>
 
-    <div [ngClass]="aplicaCssErroinvalidFeedback('email')" class="alert alert-danger" 
+    <div [ngClass]="aplicaCssErroinvalidFeedback('email')" class="alert alert-danger"
           role="alert">
         {{!verificaEmailInvalido()? "E-mail é obrigatório." : "E-mail Inválido."}}
     </div>
@@ -28,12 +28,12 @@
             <div class="form-group row">
                 <div class="form-group col-md-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <input type="text" id="cep" class="form-control" 
+                    <input type="text" id="cep" class="form-control"
                     (blur)="consultaCEP()"
-                    [ngClass]="aplicaCssErroInvalid('endereco.cep')" 
+                    [ngClass]="aplicaCssErroInvalid('endereco.cep')"
                     formControlName= "cep" >
-                    
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.cep')" 
+
+                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.cep')"
                         class="alert alert-danger" role="alert">
                         CEP é obrigatório.
                     </div>
@@ -41,10 +41,10 @@
 
                 <div class="col-md-3">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" id="numero" class="form-control"  
+                    <input type="text" id="numero" class="form-control"
                         [ngClass]="aplicaCssErroInvalid('endereco.numero')"  formControlName= "numero">
-                    
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.numero')" 
+
+                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.numero')"
                         class="alert alert-danger" role="alert">
                         Número é obrigatório.
                     </div>
@@ -52,32 +52,32 @@
 
                 <div class="col-md-6">
                     <label for="complemento" class="form-label">Complemento</label>
-                    <input type="text" id="complemento" 
-                            [ngClass]="aplicaCssErroInvalid('complemento')" 
+                    <input type="text" id="complemento"
+                            [ngClass]="aplicaCssErroInvalid('complemento')"
                             class="form-control"  formControlName= "complemento">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="rua" class="form-label">Rua</label>
-                <input  type="text" id="rua" [ngClass]="aplicaCssErroInvalid('endereco.rua')" 
-                        class="form-control endereco" 
+                <input  type="text" id="rua" [ngClass]="aplicaCssErroInvalid('endereco.rua')"
+                        class="form-control endereco"
                         formControlName= "rua"  readonly>
-                
+
                 <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.rua')" class="alert alert-danger"
                     role="alert">
                     Rua é obrigatório.
                 </div>
-            
+
             </div>
 
             <div class="row">
                 <div class="col-md-5">
                     <label for="bairro" class="form-label">Bairro</label>
-                    <input readonly type="text" id="bairro" class="form-control" 
+                    <input readonly type="text" id="bairro" class="form-control"
                             [ngClass]="aplicaCssErroInvalid('endereco.bairro')"   formControlName= "bairro" >
-                    
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.bairro')" 
+
+                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.bairro')"
                             class="alert alert-danger" role="alert">
                         Bairro é obrigatório.
                     </div>
@@ -85,10 +85,10 @@
 
                 <div class="col-md-4">
                     <label for="cidade" readonly class="form-label">Cidade</label>
-                    <input type="text" id="cidade"[ngClass]="aplicaCssErroInvalid('endereco.cidade')" 
+                    <input type="text" id="cidade"[ngClass]="aplicaCssErroInvalid('endereco.cidade')"
                             class="form-control"   formControlName= "cidade" >
-                    
-                    <div  [ngClass]="aplicaCssErroinvalidFeedback('endereco.cidade')" 
+
+                    <div  [ngClass]="aplicaCssErroinvalidFeedback('endereco.cidade')"
                             class="alert alert-danger" role="alert">
                         Cidade é obrigatório.
                     </div>
@@ -96,19 +96,21 @@
 
                 <div class="col-md-3">
                     <label for="estado" readonly class="form-label">Estado</label>
-                    <input type="text" id="estado"[ngClass]="aplicaCssErroInvalid('endereco.estado')"  
+                    <select type="text" id="estado"[ngClass]="aplicaCssErroInvalid('endereco.estado')"
                             class="form-control" formControlName= "estado">
+                           <Option *ngFor="let estado of estados "[value]="estado.sigla" >{{estado.nome}}</Option>
+                    </select>
 
                     <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.estado')"
                         class="alert alert-danger" role="alert">
-                        Cidade é obrigatório.
+                        Estado é obrigatório.
                     </div>
                 </div>
-            </div> 
-        </div>  
+            </div>
+        </div>
     <button type="submit" class="btn btn-primary" >Submit</button>
     <button  (click)="resetar()" class="btn btn-secondary">Cancelar</button>
 
-    
+
     <app-form-debug  [form]="formulario"></app-form-debug>
 </form>

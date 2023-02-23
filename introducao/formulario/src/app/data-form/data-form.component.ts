@@ -41,7 +41,7 @@ export class DataFormComponent implements OnInit {
         this.resetaDadosFormulario();
           if(cep != null || cep !== ''){
           this.cepService.consultaCEP(cep)
-          .subscribe((endereco) => this.populaDadosForm(endereco));
+              .subscribe((endereco) => this.populaDadosForm(endereco));
           }
       }
 
