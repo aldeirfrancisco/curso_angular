@@ -15,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     SharedModule,
     HttpClientModule
-    
+
   ]
 })
 export class DataFormModule { }

@@ -1,8 +1,10 @@
+
 import { Estadosbr } from './../shared/models/estadosbr';
-import { DropdownService } from './../shared/servicoes/dropdown.service';
-import { HttpClient } from '@angular/common/http';
+import { DropdownService } from '../shared/services/dropdown.service';
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-data-form',
@@ -15,8 +17,8 @@ export class DataFormComponent implements OnInit {
    estados: Estadosbr[] = [];
 
   constructor(private  formBuilder: FormBuilder,
-              private http: HttpClient,
-              private dropdDownService: DropdownService){
+              private dropdDownService: DropdownService,
+              private cepService: ConsultaCepService){
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
@@ -36,20 +38,13 @@ export class DataFormComponent implements OnInit {
   consultaCEP(): void {
 
    let cep = this.formulario.get('endereco.cep')?.value;
-   this.resetaDadosFormulario();
-    cep = cep.replace(/\D/g, '');
-    if (cep != "") {
-      var validacep = /^[0-9]{8}$/;
-
-      if(validacep.test(cep)) {
-        // this.resetaDadosFormulario(form);
-        this.http.get(`https://viacep.com.br/ws/${cep}/json`)
+        this.resetaDadosFormulario();
+          if(cep != null || cep !== ''){
+          this.cepService.consultaCEP(cep)
           .subscribe((endereco) => this.populaDadosForm(endereco));
+          }
       }
 
-
-    }
-  }
 
   populaDadosForm(dados: any){
 
@@ -80,7 +75,7 @@ export class DataFormComponent implements OnInit {
   }
   onSubmit(): void{
     if(this.formulario.valid){
-        this.http.get(`https://viacep.com.br/ws/${71555013}/json`)
+      this.cepService.consultaCEP(71555013)
         .subscribe((endereco) => {
           console.log(endereco)
           // this.formulario.reset();
