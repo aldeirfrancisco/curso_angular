@@ -14,9 +14,10 @@ import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 export class DataFormComponent implements OnInit {
 
   formulario: FormGroup;
-   estados: Estadosbr[] = [];
-   cargos: any[] = [];
-   tecnologias: any[]= [];
+  estados: Estadosbr[] = [];
+  cargos: any[] = [];
+  tecnologias: any[]= [];
+  newsLetterOp: any[] = [];
 
   constructor(private  formBuilder: FormBuilder,
               private dropdDownService: DropdownService,
@@ -35,7 +36,8 @@ export class DataFormComponent implements OnInit {
           estado: [null, Validators.required]
       }),
       cargo: [null],
-      tecnologias: [null]
+      tecnologias: [null],
+      newLetter: [null]
     })
   }
 
@@ -139,6 +141,7 @@ export class DataFormComponent implements OnInit {
       .subscribe(estados => this.estados = estados);
       this.cargos = this.dropdDownService.getCargos();
       this.tecnologias = this.dropdDownService.getTecnologias();
+      this.newsLetterOp = this.dropdDownService.getNewsLetter();
 
   }
 }
