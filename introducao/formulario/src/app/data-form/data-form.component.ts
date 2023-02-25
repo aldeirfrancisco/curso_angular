@@ -37,7 +37,8 @@ export class DataFormComponent implements OnInit {
       }),
       cargo: [null],
       tecnologias: [null],
-      newLetter: [null]
+      newLetter: ['s'],
+      termos: [null, Validators.pattern('true')]
     })
   }
 
@@ -108,6 +109,7 @@ export class DataFormComponent implements OnInit {
       this.formulario.reset();
     }
    verificaValidTouched(campo:string){
+
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
    }
     aplicaCssErroInvalid(campo: string): any{
