@@ -139,16 +139,28 @@
         <div class="form-group" >
           <div class="col-md-3"  [ngClass]="aplicaCssErroInvalid('termos')">
               <div class="checkbox">
-                <label class="checkbox-inline">
-                  <input class="form-check-input" formControlName="termos"
+                <input class="form-check-input" formControlName="termos"
                   type="checkbox"  required>
-                  Aceito os termos.</label>
+                <label class="checkbox-inline" style="margin-left: 5px;"> Aceito os termos.</label>
                 <div [ngClass]="aplicaCssErroinvalidFeedback('termos')"
                       class="alert alert-danger" role="alert">
                   Termos é obrigatório.
               </div>
               </div>
           </div>
+
+          <div class="col-md-3" style="margin-top: 10px;">
+            <label for="frameworks" >Frameworks</label>
+            <div id="frameworks" class="row" style="margin-top: 5px;">
+              <div class="checkbox" class="col-sm-4"
+                formArrayName="frameworks"
+                *ngFor="let item of getFrameworksControls(); let i = index" >
+                <label class="checkbox-inline">
+                  <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
+                </label>
+              </div>
+            </div>
+        </div>
         </div>
     <button type="submit" class="btn btn-primary" >Submit</button>
     <button  (click)="resetar()" class="btn btn-secondary">Cancelar</button>

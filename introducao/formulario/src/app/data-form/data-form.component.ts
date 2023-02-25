@@ -1,9 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 
 import { Estadosbr } from './../shared/models/estadosbr';
 import { DropdownService } from '../shared/services/dropdown.service';
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 
 @Component({
@@ -18,10 +19,12 @@ export class DataFormComponent implements OnInit {
   cargos: any[] = [];
   tecnologias: any[]= [];
   newsLetterOp: any[] = [];
+  frameworks: any[] =['Angular', 'React', 'Vue', 'Sencha'];
 
   constructor(private  formBuilder: FormBuilder,
               private dropdDownService: DropdownService,
-              private cepService: ConsultaCepService){
+              private cepService: ConsultaCepService,
+              private http: HttpClient){
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
@@ -38,10 +41,25 @@ export class DataFormComponent implements OnInit {
       cargo: [null],
       tecnologias: [null],
       newLetter: ['s'],
-      termos: [null, Validators.pattern('true')]
+      termos: [null, Validators.pattern('true')],
+      frameworks: this.buildFrameworks()
     })
   }
 
+  getFrameworksControls() {
+    return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
+  }
+
+  buildFrameworks(){
+    const values = this.frameworks.map(v => new FormControl(false));
+    return this.formBuilder.array(values)
+  // return [
+  //   new FormControl(false),
+  //   new FormControl(false),
+  //   new FormControl(false),
+  //   new FormControl(false)
+  // ];
+  }
   consultaCEP(): void {
 
       let cep = this.formulario.get('endereco.cep')?.value;
@@ -81,15 +99,32 @@ export class DataFormComponent implements OnInit {
     })
   }
   onSubmit(): void{
+    console.log(this.formulario);
+
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks.map((v:any, i: any) => v ? this.frameworks[i] : null)
+      .filter((v: any) => v !== null)
+    });
+
+    console.log(valueSubmit);
+
     if(this.formulario.valid){
-      this.cepService.consultaCEP(71555013)
-        .subscribe((endereco) => {
-          console.log(endereco)
-          // this.formulario.reset();
-        }, (error: any)=> alert("error"));
+    this.http
+        .post('https://httpbin.org/post', JSON.stringify({}))
+        .subscribe(
+          dados => {
+            console.log(dados);
+            // reseta o form
+            // this.formulario.reset();
+            // this.resetar();
+          },
+          (error: any) => alert('erro')
+        );
 
      } else {
-      console.log("invalid");
+
       this.verificaValidacoesForm(this.formulario);
 
      }
@@ -139,6 +174,8 @@ export class DataFormComponent implements OnInit {
   //   nome: new FormControl(null),
   //   email: new FormControl(null)
   // });
+   console.log(this.formulario);
+
     this.dropdDownService.getEstados()
       .subscribe(estados => this.estados = estados);
       this.cargos = this.dropdDownService.getCargos();
