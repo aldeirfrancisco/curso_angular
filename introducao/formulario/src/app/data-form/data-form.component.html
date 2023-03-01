@@ -35,7 +35,7 @@
 
                     <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.cep')"
                         class="alert alert-danger" role="alert">
-                        CEP é obrigatório.
+                        {{formulario.get('endereco.cep')?.hasError('cepInvalido') ? 'CEP invalido.' : 'CEP é obrigatório.'}}
                     </div>
                 </div>
 

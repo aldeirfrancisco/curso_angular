@@ -31,7 +31,7 @@ export class DataFormComponent implements OnInit {
       nome: [null, Validators.required],
       email:[null, [Validators.required, Validators.email]],
       endereco: this.formBuilder.group({
-          cep: [null, Validators.required],
+          cep: [null, [Validators.required,FormValidations.cepValidator]],
           numero:[null, Validators.required],
           complemento:[null],
           rua:[null, Validators.required],
@@ -72,16 +72,16 @@ export class DataFormComponent implements OnInit {
         this.resetaDadosFormulario();
           if(cep != null || cep !== ''){
           this.cepService.consultaCEP(cep)
-              .subscribe((endereco) => this.populaDadosForm(endereco));
+              .subscribe((endereco) => this.populaDadosForm(endereco, cep));
           }
   }
 
 
-  populaDadosForm(dados: any){
+  populaDadosForm(dados: any, cep: any){
 
     this.formulario.patchValue({
        endereco: {
-           cep: dados.cep,
+           cep: cep,
            numero: '',
            complemento: dados.complemento ,
            rua: dados.logradouro,
