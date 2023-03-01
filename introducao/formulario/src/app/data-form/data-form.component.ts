@@ -1,10 +1,11 @@
+import { FormValidations } from './../shared/formValidations ';
 import { HttpClient } from '@angular/common/http';
 
 import { Estadosbr } from './../shared/models/estadosbr';
 import { DropdownService } from '../shared/services/dropdown.service';
 
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 
 @Component({
@@ -46,13 +47,15 @@ export class DataFormComponent implements OnInit {
     })
   }
 
+
+
   getFrameworksControls() {
     return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
   }
 
   buildFrameworks(){
     const values = this.frameworks.map(v => new FormControl(false));
-    return this.formBuilder.array(values)
+    return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1))
   // return [
   //   new FormControl(false),
   //   new FormControl(false),
@@ -60,6 +63,9 @@ export class DataFormComponent implements OnInit {
   //   new FormControl(false)
   // ];
   }
+
+
+
   consultaCEP(): void {
 
       let cep = this.formulario.get('endereco.cep')?.value;

@@ -151,13 +151,17 @@
 
           <div class="col-md-3" style="margin-top: 10px;">
             <label for="frameworks" >Frameworks</label>
-            <div id="frameworks" class="row" style="margin-top: 5px;">
+            <div id="frameworks" class="row" style="margin-top: 5px;"  [ngClass]="aplicaCssErroInvalid('frameworks')">
               <div class="checkbox" class="col-sm-4"
                 formArrayName="frameworks"
                 *ngFor="let item of getFrameworksControls(); let i = index" >
                 <label class="checkbox-inline">
                   <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
                 </label>
+              </div>
+              <div [ngClass]="aplicaCssErroinvalidFeedback('frameworks')"
+                      class="alert alert-danger" role="alert">
+                  Seleciona uma opcao.
               </div>
             </div>
         </div>
