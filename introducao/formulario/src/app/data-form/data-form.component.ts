@@ -1,12 +1,14 @@
-import { FormValidations } from './../shared/formValidations ';
+import { map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { Estadosbr } from './../shared/models/estadosbr';
 import { DropdownService } from '../shared/services/dropdown.service';
 
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
+import { VerificaEmailService } from './services/verifica-email.service';
+import { FormValidations } from './../shared/formValidations ';
 
 @Component({
   selector: 'app-data-form',
@@ -25,11 +27,15 @@ export class DataFormComponent implements OnInit {
   constructor(private  formBuilder: FormBuilder,
               private dropdDownService: DropdownService,
               private cepService: ConsultaCepService,
-              private http: HttpClient){
+              private http: HttpClient,
+              private verificaEmailService: VerificaEmailService){
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      email:[null, [Validators.required, Validators.email]],
+      //validações sicronas de email,
+      //email:[null, [Validators.required, Validators.email]],
+      email:[null, [Validators.required, Validators.email], [this.validarEmail.bind(this)]],
+      confirmarEmail: [null, [FormValidations.equalsTo('email')]],
       endereco: this.formBuilder.group({
           cep: [null, [Validators.required,FormValidations.cepValidator]],
           numero:[null, Validators.required],
@@ -165,22 +171,33 @@ export class DataFormComponent implements OnInit {
     }
     verificaEmailInvalido(){
       let erroEmail = this.formulario.get('email');
-      if(erroEmail?.errors){
-        return erroEmail.errors['email'] && erroEmail.touched;
+
+      if(erroEmail?.errors ){
+
+         let aqui  = erroEmail.errors['email'] && erroEmail.touched
+         console.log('aqui', aqui);
+        return aqui;
       }
     }
 
     compararCargos(obj1: any, obj2:any) {
       return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
     }
-
+// validações assíncrona
+    validarEmail(formControl: FormControl) {
+      return this.verificaEmailService.verificarEmaill(formControl.value)
+        .pipe(
+          map(emailExiste => emailExiste ? { emailInvalido: true } : null)
+          );
+    }
 
   ngOnInit() {
   // this.formulario  = new FormGroup({
   //   nome: new FormControl(null),
   //   email: new FormControl(null)
   // });
-   console.log(this.formulario);
+
+    this.verificaEmailService.verificarEmaill('email@email.com').subscribe();
 
     this.dropdDownService.getEstados()
       .subscribe(estados => this.estados = estados);

@@ -18,10 +18,27 @@
          [ngClass]="aplicaCssErroInvalid('email')" id="email"
          placeholder="nome@email.com">
     </div>
-
+    <!-- forma de verificar validação-->
+   <!-- "formulario.get('email').status === 'PENDING'"-->
+   <!-- "formulario.get('email').status === 'VALID'"-->
     <div [ngClass]="aplicaCssErroinvalidFeedback('email')" class="alert alert-danger"
           role="alert">
-        {{!verificaEmailInvalido()? "E-mail é obrigatório." : "E-mail Inválido."}}
+        {{(!verificaEmailInvalido())? (formulario.get('email')?.hasError('emailInvalido'))? " E-mail já cadastrado.": "E-mail é obrigatório.": "E-mail Inválido."}}
+    </div>
+
+
+    <div class="form-group" [ngClass]="aplicaCssErroInvalid('confirmarEmail')">
+      <div class="col-sm-12">
+        <label for="confirmarEmail" class="control-label">Confirmar Email</label>
+      </div>
+      <div class="col-sm-12">
+        <input type="confirmarEmail" class="form-control" formControlName="confirmarEmail" id="confirmarEmail" placeholder="nome@email.com">
+      </div>
+      <div [ngClass]="aplicaCssErroinvalidFeedback('confirmarEmail')" class="alert alert-danger"
+        role="alert">
+        E-mail não são iguais
+      <!-- {{!verificaEmailInvalido()? "E-mail é obrigatório." : "E-mail Inválido."}} -->
+  </div>
     </div>
         <div formGroupName="endereco">
 
