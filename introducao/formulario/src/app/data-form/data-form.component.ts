@@ -30,8 +30,10 @@ export class DataFormComponent implements OnInit {
               private http: HttpClient,
               private verificaEmailService: VerificaEmailService){
 
+  //    (null) valor inicial, (primeira validators sicrona, segunda validators assícrona  )
+ //nome: [null, [Validators.required, Validators.minLength(4)]],
     this.formulario = this.formBuilder.group({
-      nome: [null, Validators.required],
+      nome: [null, [Validators.required, Validators.minLength(4)]],
       //validações sicronas de email,
       //email:[null, [Validators.required, Validators.email]],
       email:[null, [Validators.required, Validators.email], [this.validarEmail.bind(this)]],

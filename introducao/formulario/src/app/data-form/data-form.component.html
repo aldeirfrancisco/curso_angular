@@ -6,10 +6,7 @@
         <input type="text" formControlName="nome"  [ngClass]="aplicaCssErroInvalid('nome')"
          class="form-control" id="nome" aria-describedby="nome"
          placeholder="nome">
-    </div>
-
-    <div [ngClass]="aplicaCssErroinvalidFeedback('nome')"  class="alert alert-danger" role="alert">
-        Nome é obrigatório.
+         <app-error-msg [control]="formulario.get('nome')" label="Nome"></app-error-msg>
     </div>
 
     <div class="form-group  col-sm-12">
@@ -17,14 +14,13 @@
         <input type="email"  formControlName="email" class="form-control "
          [ngClass]="aplicaCssErroInvalid('email')" id="email"
          placeholder="nome@email.com">
+         <app-error-msg [control]="formulario.get('email')" label="E-mail"></app-error-msg>
     </div>
     <!-- forma de verificar validação-->
    <!-- "formulario.get('email').status === 'PENDING'"-->
    <!-- "formulario.get('email').status === 'VALID'"-->
-    <div [ngClass]="aplicaCssErroinvalidFeedback('email')" class="alert alert-danger"
-          role="alert">
-        {{(!verificaEmailInvalido())? (formulario.get('email')?.hasError('emailInvalido'))? " E-mail já cadastrado.": "E-mail é obrigatório.": "E-mail Inválido."}}
-    </div>
+   <!--formulario.get('email')?.hasError('emailInvalido')-->
+
 
 
     <div class="form-group" [ngClass]="aplicaCssErroInvalid('confirmarEmail')">
@@ -33,12 +29,9 @@
       </div>
       <div class="col-sm-12">
         <input type="confirmarEmail" class="form-control" formControlName="confirmarEmail" id="confirmarEmail" placeholder="nome@email.com">
+        <app-error-msg [control]="formulario.get('confirmarEmail')" label="E-mail"></app-error-msg>
       </div>
-      <div [ngClass]="aplicaCssErroinvalidFeedback('confirmarEmail')" class="alert alert-danger"
-        role="alert">
-        E-mail não são iguais
-      <!-- {{!verificaEmailInvalido()? "E-mail é obrigatório." : "E-mail Inválido."}} -->
-  </div>
+
     </div>
         <div formGroupName="endereco">
 
@@ -50,21 +43,14 @@
                     [ngClass]="aplicaCssErroInvalid('endereco.cep')"
                     formControlName= "cep" >
 
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.cep')"
-                        class="alert alert-danger" role="alert">
-                        {{formulario.get('endereco.cep')?.hasError('cepInvalido') ? 'CEP invalido.' : 'CEP é obrigatório.'}}
-                    </div>
+                    <app-error-msg [control]="formulario.get('endereco.cep')" label="CEP"></app-error-msg>
                 </div>
 
                 <div class="col-md-3">
                     <label for="numero" class="form-label">Número</label>
                     <input type="text" id="numero" class="form-control"
                         [ngClass]="aplicaCssErroInvalid('endereco.numero')"  formControlName= "numero">
-
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.numero')"
-                        class="alert alert-danger" role="alert">
-                        Número é obrigatório.
-                    </div>
+                        <app-error-msg [control]="formulario.get('endereco.numero')" label="Número"></app-error-msg>
                 </div>
 
                 <div class="col-md-6">
@@ -80,12 +66,7 @@
                 <input  type="text" id="rua" [ngClass]="aplicaCssErroInvalid('endereco.rua')"
                         class="form-control endereco"
                         formControlName= "rua"  readonly>
-
-                <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.rua')" class="alert alert-danger"
-                    role="alert">
-                    Rua é obrigatório.
-                </div>
-
+                        <app-error-msg [control]="formulario.get('endereco.rua')" label="Rua"></app-error-msg>
             </div>
 
             <div class="row">
@@ -93,11 +74,7 @@
                     <label for="bairro" class="form-label">Bairro</label>
                     <input readonly type="text" id="bairro" class="form-control"
                             [ngClass]="aplicaCssErroInvalid('endereco.bairro')"   formControlName= "bairro" >
-
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.bairro')"
-                            class="alert alert-danger" role="alert">
-                        Bairro é obrigatório.
-                    </div>
+                            <app-error-msg [control]="formulario.get('endereco.bairro')" label="Bairro"></app-error-msg>
                 </div>
 
                 <div class="col-md-4">
@@ -105,10 +82,7 @@
                     <input type="text" id="cidade"[ngClass]="aplicaCssErroInvalid('endereco.cidade')"
                             class="form-control"   formControlName= "cidade" >
 
-                    <div  [ngClass]="aplicaCssErroinvalidFeedback('endereco.cidade')"
-                            class="alert alert-danger" role="alert">
-                        Cidade é obrigatório.
-                    </div>
+                            <app-error-msg [control]="formulario.get('endereco.cidade')" label="Cidade"></app-error-msg>
                 </div>
 
                 <div class="col-md-3">
@@ -118,10 +92,7 @@
                            <Option *ngFor="let estado of estados "[value]="estado.sigla" >{{estado.nome}}</Option>
                     </select>
 
-                    <div [ngClass]="aplicaCssErroinvalidFeedback('endereco.estado')"
-                        class="alert alert-danger" role="alert">
-                        Estado é obrigatório.
-                    </div>
+                    <app-error-msg [control]="formulario.get('endereco.estado')" label="Estado"></app-error-msg>
                 </div>
             </div>
         </div>
@@ -159,10 +130,7 @@
                 <input class="form-check-input" formControlName="termos"
                   type="checkbox"  required>
                 <label class="checkbox-inline" style="margin-left: 5px;"> Aceito os termos.</label>
-                <div [ngClass]="aplicaCssErroinvalidFeedback('termos')"
-                      class="alert alert-danger" role="alert">
-                  Termos é obrigatório.
-              </div>
+                <app-error-msg [control]="formulario.get('endereco.bairro')" label="Bairro"></app-error-msg>
               </div>
           </div>
 
@@ -176,10 +144,7 @@
                   <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
                 </label>
               </div>
-              <div [ngClass]="aplicaCssErroinvalidFeedback('frameworks')"
-                      class="alert alert-danger" role="alert">
-                  Seleciona uma opcao.
-              </div>
+              <app-error-msg [control]="formulario.get('frameworks')" label="Frameworks"></app-error-msg>
             </div>
         </div>
         </div>
