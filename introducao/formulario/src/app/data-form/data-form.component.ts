@@ -1,4 +1,4 @@
-import { map } from 'rxjs';
+import { distinctUntilChanged, empty, map, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { Estadosbr } from './../shared/models/estadosbr';
@@ -74,24 +74,24 @@ export class DataFormComponent implements OnInit {
 
 
 
-  consultaCEP(): void {
+  // consultaCEP(): void {
 
-      let cep = this.formulario.get('endereco.cep')?.value;
-        this.resetaDadosFormulario();
-          if(cep != null || cep !== ''){
-          this.cepService.consultaCEP(cep)
-              .subscribe((endereco) => this.populaDadosForm(endereco, cep));
-          }
-  }
+  //     let cep = this.formulario.get('endereco.cep')?.value;
+  //       this.resetaDadosFormulario();
+  //         if(cep != null || cep !== ''){
+  //         this.cepService.consultaCEP(cep)
+  //             .subscribe((endereco) => this.populaDadosForm(endereco));
+  //         }
+  // }
 
 
-  populaDadosForm(dados: any, cep: any){
+  populaDadosForm(dados: any){
 
     this.formulario.patchValue({
        endereco: {
-           cep: cep,
+           cep: dados.cep,
            numero: '',
-           complemento: dados.complemento ,
+           complemento: dados.complemento,
            rua: dados.logradouro,
            bairro: dados.bairro,
            cidade: dados.localidade,
@@ -175,10 +175,7 @@ export class DataFormComponent implements OnInit {
       let erroEmail = this.formulario.get('email');
 
       if(erroEmail?.errors ){
-
-         let aqui  = erroEmail.errors['email'] && erroEmail.touched
-         console.log('aqui', aqui);
-        return aqui;
+        return erroEmail.errors['email'] && erroEmail.touched;
       }
     }
 
@@ -206,6 +203,15 @@ export class DataFormComponent implements OnInit {
       this.cargos = this.dropdDownService.getCargos();
       this.tecnologias = this.dropdDownService.getTecnologias();
       this.newsLetterOp = this.dropdDownService.getNewsLetter();
+
+      this.formulario.get('endereco.cep')?.statusChanges
+           .pipe(
+              distinctUntilChanged(),
+              switchMap(status => status === 'VALID' ?
+                this.cepService.consultaCEP(this.formulario.get('endereco.cep')?.value):
+               empty()
+            )
+           ).subscribe((endereco) =>  endereco ? this.populaDadosForm(endereco) : {})
 
   }
 }
