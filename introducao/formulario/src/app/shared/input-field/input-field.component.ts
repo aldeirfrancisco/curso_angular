@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const INPUT_FIELD_VALUE_ACCESSOR: any = {
@@ -16,8 +16,8 @@ const INPUT_FIELD_VALUE_ACCESSOR: any = {
 export class InputFieldComponent implements ControlValueAccessor {
 
   @Input() classeCss: any;
-  @Input() id: string ='';
-  @Input() label: string = '';
+  @Input() id: any;
+  @Input() label: any;
   @Input() type = 'text';
   @Input() control: any;
   @Input() isReadOnly = false;
@@ -29,11 +29,12 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   set value(v: any) {
-    if (v !== this.innerValue) {
-      console.log(" control ",this.control);
+  console.log("clas ", this.classeCss);
 
+    if (v !== this.innerValue) {
       this.innerValue = v;
       this.onChangeCb(v);
+      this.onTouchedCb(v);
     }
   }
 
@@ -41,16 +42,16 @@ export class InputFieldComponent implements ControlValueAccessor {
   onTouchedCb: (_: any) => void = () => {};
 
   writeValue(v: any): void {
-    this.value(v);
+    this.value = v;
   }
 
   registerOnChange(fn: any): void {
+    console.log( "classeCss 2", this.classeCss);
     this.onChangeCb = fn;
-    console.log("registerOnChange ",this.control);
   }
 
   registerOnTouched(fn: any): void {
-    console.log("registerOnTouched ",this.control);
+    console.log( "classeCss 1", this.classeCss);
     this.onTouchedCb = fn;
   }
 

@@ -1,3 +1,4 @@
+import { BaseFormComponent } from './../shared/base-form/base-form.component';
 import { distinctUntilChanged, empty, map, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -15,9 +16,9 @@ import { FormValidations } from './../shared/formValidations ';
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.css']
 })
-export class DataFormComponent implements OnInit {
+export class DataFormComponent extends BaseFormComponent implements OnInit {
 
-  formulario: FormGroup;
+  // formulario: FormGroup;
   estados: Estadosbr[] = [];
   cargos: any[] = [];
   tecnologias: any[]= [];
@@ -29,7 +30,7 @@ export class DataFormComponent implements OnInit {
               private cepService: ConsultaCepService,
               private http: HttpClient,
               private verificaEmailService: VerificaEmailService){
-
+      super();
   //    (null) valor inicial, (primeira validators sicrona, segunda validators assícrona  )
  //nome: [null, [Validators.required, Validators.minLength(4)]],
     this.formulario = this.formBuilder.group({
@@ -73,18 +74,6 @@ export class DataFormComponent implements OnInit {
   }
 
 
-
-  // consultaCEP(): void {
-
-  //     let cep = this.formulario.get('endereco.cep')?.value;
-  //       this.resetaDadosFormulario();
-  //         if(cep != null || cep !== ''){
-  //         this.cepService.consultaCEP(cep)
-  //             .subscribe((endereco) => this.populaDadosForm(endereco));
-  //         }
-  // }
-
-
   populaDadosForm(dados: any){
 
     this.formulario.patchValue({
@@ -112,19 +101,17 @@ export class DataFormComponent implements OnInit {
       }
     })
   }
-  onSubmit(): void{
-    console.log(this.formulario);
-
+  submit(): any {
     let valueSubmit = Object.assign({}, this.formulario.value);
 
     valueSubmit = Object.assign(valueSubmit, {
-      frameworks: valueSubmit.frameworks.map((v:any, i: any) => v ? this.frameworks[i] : null)
-      .filter((v: any) => v !== null)
+      frameworks: valueSubmit.frameworks
+      .map((v: any, i: any) => v ? this.frameworks[i] : null)
+      .filter((v:any) => v !== null)
     });
 
     console.log(valueSubmit);
 
-    if(this.formulario.valid){
     this.http
         .post('https://httpbin.org/post', JSON.stringify({}))
         .subscribe(
@@ -136,48 +123,7 @@ export class DataFormComponent implements OnInit {
           },
           (error: any) => alert('erro')
         );
-
-     } else {
-
-      this.verificaValidacoesForm(this.formulario);
-
-     }
   }
-
-    verificaValidacoesForm(formGrupo: FormGroup){
-        Object.keys(formGrupo.controls).forEach(campo =>{
-          let controle = formGrupo.get(campo);
-          controle?.markAsTouched();
-          if(controle instanceof FormGroup){
-            this.verificaValidacoesForm(controle);
-          }
-        })
-    }
-
-    resetar():void{
-      this.formulario.reset();
-    }
-   verificaValidTouched(campo:string){
-
-    return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
-   }
-    aplicaCssErroInvalid(campo: string): any{
-      return {
-        'is-invalid': this.verificaValidTouched(campo),
-      }
-    }
-    aplicaCssErroinvalidFeedback(campo: string): any{
-      return {
-        'invalid-feedback': !this.verificaValidTouched(campo),
-      }
-    }
-    verificaEmailInvalido(){
-      let erroEmail = this.formulario.get('email');
-
-      if(erroEmail?.errors ){
-        return erroEmail.errors['email'] && erroEmail.touched;
-      }
-    }
 
     compararCargos(obj1: any, obj2:any) {
       return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
@@ -211,7 +157,7 @@ export class DataFormComponent implements OnInit {
                 this.cepService.consultaCEP(this.formulario.get('endereco.cep')?.value):
                empty()
             )
-           ).subscribe((endereco) =>  endereco ? this.populaDadosForm(endereco) : {})
+           ).subscribe((endereco: any) =>  endereco ? this.populaDadosForm(endereco) : {})
 
   }
 }
