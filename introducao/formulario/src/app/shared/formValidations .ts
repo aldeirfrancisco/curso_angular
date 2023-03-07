@@ -59,8 +59,6 @@ export class FormValidations {
        (total) valor acumulador,(current) valor a ser somado, expresao boolean, calculo, retorno, valor inicial.
       reduce( (total,  current) => current ? total + current : total, 0); */
       if (formArray instanceof FormArray) {
-        console.log("formArray ",formArray);
-
       const totalChecked = formArray.controls
          .map(v => v.value)
          .reduce( (total,  current) => current ? total + current : total, 0);

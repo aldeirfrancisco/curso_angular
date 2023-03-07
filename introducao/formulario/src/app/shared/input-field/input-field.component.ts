@@ -29,8 +29,6 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   set value(v: any) {
-  console.log("clas ", this.classeCss);
-
     if (v !== this.innerValue) {
       this.innerValue = v;
       this.onChangeCb(v);
@@ -46,12 +44,10 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   registerOnChange(fn: any): void {
-    console.log( "classeCss 2", this.classeCss);
     this.onChangeCb = fn;
   }
 
   registerOnTouched(fn: any): void {
-    console.log( "classeCss 1", this.classeCss);
     this.onTouchedCb = fn;
   }
 

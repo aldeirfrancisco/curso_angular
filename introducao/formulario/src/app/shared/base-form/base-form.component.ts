@@ -55,18 +55,14 @@ export abstract class BaseFormComponent {
     if (this.formulario.valid) {
       this.submit();
     } else {
-      console.log('formulario invalido');
       this.verificaValidacoesForm(this.formulario);
     }
   }
 
   verificaValidacoesForm(formGroup: FormGroup | FormArray) {
     Object.keys(formGroup.controls).forEach(campo => {
-      console.log(campo);
       const controle = formGroup.get(campo);
       controle?.markAsDirty();
-      console.log('controle ', controle);
-
       controle?.markAsTouched();
       if (controle instanceof FormGroup || controle instanceof FormArray) {
         this.verificaValidacoesForm(controle);

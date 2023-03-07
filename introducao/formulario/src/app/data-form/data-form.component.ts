@@ -1,3 +1,4 @@
+import { Cidade } from './../shared/models/cidade';
 import { BaseFormComponent } from './../shared/base-form/base-form.component';
 import { distinctUntilChanged, empty, map, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -6,7 +7,7 @@ import { Estadosbr } from './../shared/models/estadosbr';
 import { DropdownService } from '../shared/services/dropdown.service';
 
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { VerificaEmailService } from './services/verifica-email.service';
 import { FormValidations } from './../shared/formValidations ';
@@ -20,6 +21,7 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   // formulario: FormGroup;
   estados: Estadosbr[] = [];
+  cidades: Cidade[] = [];
   cargos: any[] = [];
   tecnologias: any[]= [];
   newsLetterOp: any[] = [];
@@ -110,13 +112,10 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
       .filter((v:any) => v !== null)
     });
 
-    console.log(valueSubmit);
-
     this.http
         .post('https://httpbin.org/post', JSON.stringify({}))
         .subscribe(
           dados => {
-            console.log(dados);
             // reseta o form
             // this.formulario.reset();
             // this.resetar();
@@ -143,9 +142,17 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   // });
 
     this.verificaEmailService.verificarEmaill('email@email.com').subscribe();
-
     this.dropdDownService.getEstados()
-      .subscribe(estados => this.estados = estados);
+    .subscribe(estados => {
+       this.estados = estados
+
+       this.dropdDownService.getCidades(this.estados[0].id)
+       .subscribe( cidades => this.cidades = cidades);
+      });
+
+
+
+
       this.cargos = this.dropdDownService.getCargos();
       this.tecnologias = this.dropdDownService.getTecnologias();
       this.newsLetterOp = this.dropdDownService.getNewsLetter();
@@ -157,7 +164,16 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
                 this.cepService.consultaCEP(this.formulario.get('endereco.cep')?.value):
                empty()
             )
-           ).subscribe((endereco: any) =>  endereco ? this.populaDadosForm(endereco) : {})
+           ).subscribe((endereco: any) =>  endereco ? this.populaDadosForm(endereco) : {});
 
+           this.formulario.get('endereco.estado').valueChanges
+                .pipe(
+                    tap(estado => console.log('Novo estado: ', estado)),
+                    map(estado => this.estados.filter(e => e.sigla === estado)),
+                    map((estados: any) => estados && estados?.length > 0 ? estados[0]?.id : empty()),
+                    switchMap((estadoId: number) => this.dropdDownService.getCidades(estadoId)),
+                    tap(console.log)
+                )
+           .subscribe((cidades: any) => this.cidades = cidades);
   }
 }

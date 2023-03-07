@@ -1,3 +1,5 @@
+import { map } from 'rxjs';
+import { Cidade } from './../models/cidade';
 
 import { HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -9,6 +11,13 @@ import { Estadosbr } from '../models/estadosbr';
 export class DropdownService {
 
   constructor(private http: HttpClient) { }
+
+  getCidades(idEstado: number){
+    return this.http.get<Cidade[]>('assets/dados/cidades.json')
+        .pipe(
+          map((cidades: Cidade[]) => cidades.filter(c => c.estado == idEstado))
+        );
+  }
 
   getEstados(){
     return this.http.get<Estadosbr[]>('assets/dados/estadosBR.json');
