@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Curso } from '../curso';
 import { CursosService } from '../cursos.service';
 import { AlertModealComponent } from 'src/app/shared/alert-modeal/alert-modeal.component';
+import { AlertModelServiceService } from 'src/app/shared/alert-model-service.service';
 
 @Component({
   selector: 'app-cursos-lista',
@@ -20,7 +21,7 @@ export class CursosListaComponent implements OnInit {
   bsModalRef?: BsModalRef;
 
   constructor( private cursoService: CursosService,
-               private modalService: BsModalService){}
+               private alert: AlertModelServiceService){}
 
   //observable são lazy (preguiçoso)
   //observable são uma strime de dados
@@ -57,8 +58,6 @@ export class CursosListaComponent implements OnInit {
   }
 
   handleError(){
-    this.bsModalRef = this.modalService.show(AlertModealComponent);
-    this.bsModalRef.content.type= 'danger';
-    this.bsModalRef.content.message= 'Erro ao carregar cursos. Tente novamente mais tarde.';
+    this.alert.showAlertDanger ('Erro ao carregar cursos. Tente novamente mais tarde.');
   }
 }
