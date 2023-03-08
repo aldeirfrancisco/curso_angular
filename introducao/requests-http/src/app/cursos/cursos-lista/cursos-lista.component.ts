@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Curso } from '../curso';
 import { CursosService } from '../cursos.service';
 
@@ -10,7 +11,10 @@ import { CursosService } from '../cursos.service';
 })
 export class CursosListaComponent implements OnInit {
 
-  cursos: Curso[] = [];
+  //cursos: Curso[] = [];
+  //$ variavel com isso é um observable
+  cursos$: Observable<Curso[]> = new Observable();
+
   constructor(private cursoService: CursosService){}
 
   //observable são lazy (preguiçoso)
@@ -19,6 +23,7 @@ export class CursosListaComponent implements OnInit {
   //subscribe ativa a inscrição
   ngOnInit(){
 
-    this.cursoService.list().subscribe( cursos => this.cursos = cursos)
+    //this.cursoService.list().subscribe( cursos => this.cursos = cursos)
+    this.cursos$ = this.cursoService.list()
   }
 }
