@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 
 import { Curso } from './curso';
-import { delay } from 'rxjs';
+import { delay, take,tap } from 'rxjs';
 
 //httpClient não precisa transformar o json manualmente e o http precisar.
 @Injectable({
@@ -19,5 +19,13 @@ export class CursosService {
     .pipe(
       delay(2000)
     );
+  }
+
+  create(curso: any){
+    console.log("aqui ",curso);
+
+    return this.http.post(this.APi, curso).pipe(
+      tap(console.log),
+      take(1));
   }
 }
