@@ -58,6 +58,6 @@ export class CursosListaComponent implements OnInit {
   }
 
   handleError(){
-    this.alert.showAlertDanger ('Erro ao carregar cursos. Tente novamente mais tarde.');
+    this.alert.showAlertDanger('Erro ao carregar cursos. Tente novamente mais tarde.');
   }
 }
