@@ -67,7 +67,7 @@ export class CursoFormComponent implements OnInit {
     }
 
     if(this.form.valid){
-     this.service.create(this.form.value).subscribe(
+     this.service.save(this.form.value).subscribe(
      ( success ) => {
        this.modal.showAlertSuccess(msgSuccess)
        this.location.back();

@@ -11,25 +11,34 @@ import { delay, take,tap } from 'rxjs';
 })
 export class CursosService {
 
-  private readonly APi = 'http://localhost:3000/cursos';
+  private readonly API = 'http://localhost:3000/cursos';
   constructor( private http: HttpClient) { }
 
   list(){
-    return this.http.get<Curso[]>(this.APi)
+    return this.http.get<Curso[]>(this.API)
     .pipe(
       delay(2000)
     );
   }
 
-  create(curso: any){
-    console.log("aqui ",curso);
-    return this.http.post(this.APi, curso).pipe(
-      tap(console.log),
-      take(1));
+  save(curso: any) {
+    if (curso.id) {
+      return this.update(curso);
+    }
+    return this.create(curso);
+  }
+
+  private create(curso: any){
+
+    return this.http.post(this.API, curso).pipe( take(1));
+  }
+
+  private update(curso: any) {
+    return this.http.put(`${this.API}/${curso.id}`, curso).pipe(take(1));
   }
 
   loadByID(id: number){
-    return this.http.get<Curso>(`${this.APi}/${id}`)
+    return this.http.get<Curso>(`${this.API}/${id}`)
     .pipe(
      take(1)
     );
