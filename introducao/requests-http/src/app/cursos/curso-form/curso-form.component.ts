@@ -59,12 +59,8 @@ export class CursoFormComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
 
-    let msgSuccess = MSN.CADASTRO_SUCCESS;
-    let msgError = MSN.CADASTRO_ERROR;
-    if (this.form.value.id) {
-      msgSuccess = MSN.EDITAR_SUCESS;
-      msgError = MSN.EDITAR_ERROR;
-    }
+    let msgSuccess =  this.form.value.id ? MSN.EDITAR_SUCESS : MSN.CADASTRO_SUCCESS;
+    let msgError = this.form.value.id ? MSN.EDITAR_ERROR : MSN.CADASTRO_ERROR;
 
     if(this.form.valid){
      this.service.save(this.form.value).subscribe(
