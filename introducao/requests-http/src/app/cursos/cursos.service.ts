@@ -28,6 +28,17 @@ export class CursosService {
     return this.create(curso);
   }
 
+  remove(id: number) {
+    return this.http.delete(`${this.API}/${id}`).pipe(take(1));
+  }
+
+  loadByID(id: number){
+    return this.http.get<Curso>(`${this.API}/${id}`)
+    .pipe(
+     take(1)
+    );
+  }
+
   private create(curso: any){
 
     return this.http.post(this.API, curso).pipe( take(1));
@@ -37,10 +48,4 @@ export class CursosService {
     return this.http.put(`${this.API}/${curso.id}`, curso).pipe(take(1));
   }
 
-  loadByID(id: number){
-    return this.http.get<Curso>(`${this.API}/${id}`)
-    .pipe(
-     take(1)
-    );
-  }
 }
