@@ -23,14 +23,13 @@ export class CursosService {
 
   create(curso: any){
     console.log("aqui ",curso);
-
     return this.http.post(this.APi, curso).pipe(
       tap(console.log),
       take(1));
   }
 
   loadByID(id: number){
-    return this.http.get<Curso[]>(`${this.APi}/${id}`)
+    return this.http.get<Curso>(`${this.APi}/${id}`)
     .pipe(
      take(1)
     );

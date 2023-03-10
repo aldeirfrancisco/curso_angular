@@ -33,22 +33,25 @@ export class CursoFormComponent implements OnInit {
   //create, update, delete => usa o =>  concatMap => a ordem da requisição importa.
   //mergeMap => a ordem não importa.
   //exhaustMap => comum usar em caso de login, obtem a responsta para depois fazer uma nova requisição.
-     this.route.params.pipe(
-        map(params => params['id']),
-        switchMap((id: number) => this.service.loadByID(id))
-     ).subscribe((curso: any) => this.updateFrom(curso));
+    //  this.route.params.pipe(
+    //     map(params => params['id']),
+    //     switchMap((id: number) => this.service.loadByID(id))
+    //  ).subscribe((curso: any) => this.updateFrom(curso));
+
+      const curso = this.route.snapshot.data['curso']
 
      this.form = this.fb.group({
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)] ]
+      id: [curso.id],
+      nome: [curso.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(250)] ]
      })
   }
 
-  updateFrom(curso: any){
-    this.form.patchValue({
-      id: curso.id,
-      nome: curso.nome
-    })
-  }
+  // updateFrom(curso: any){
+  //   this.form.patchValue({
+  //     id: curso.id,
+  //     nome: curso.nome
+  //   })
+  // }
   hasError(field: string) {
     return this.form.get(field).errors;
   }
