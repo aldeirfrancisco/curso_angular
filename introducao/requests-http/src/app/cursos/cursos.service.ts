@@ -28,4 +28,11 @@ export class CursosService {
       tap(console.log),
       take(1));
   }
+
+  loadByID(id: number){
+    return this.http.get<Curso[]>(`${this.APi}/${id}`)
+    .pipe(
+     take(1)
+    );
+  }
 }

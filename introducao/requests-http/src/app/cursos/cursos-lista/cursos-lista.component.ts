@@ -5,6 +5,7 @@ import { Curso } from '../curso';
 import { CursosService } from '../cursos.service';
 import { AlertModealComponent } from 'src/app/shared/alert-modeal/alert-modeal.component';
 import { AlertModelServiceService } from 'src/app/shared/alert-model-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cursos-lista',
@@ -21,7 +22,9 @@ export class CursosListaComponent implements OnInit {
   bsModalRef?: BsModalRef;
 
   constructor( private cursoService: CursosService,
-               private alert: AlertModelServiceService){}
+               private alert: AlertModelServiceService,
+               private router: Router,
+               private route: ActivatedRoute){}
 
   //observable são lazy (preguiçoso)
   //observable são uma strime de dados
@@ -44,6 +47,9 @@ export class CursosListaComponent implements OnInit {
     //                    });
   }
 
+  onEdit(id: number){
+    this.router.navigate(['editar',id], { relativeTo: this.route})
+  }
   onRefresh() {
     this.cursos$ = this.cursoService.list()
     .pipe(
