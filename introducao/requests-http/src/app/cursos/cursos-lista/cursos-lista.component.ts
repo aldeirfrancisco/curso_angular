@@ -6,6 +6,7 @@ import { CursosService } from '../cursos.service';
 import { AlertModealComponent } from 'src/app/shared/alert-modeal/alert-modeal.component';
 import { AlertModelServiceService } from 'src/app/shared/alert-model-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CusrsoService2Service } from '../cusrso-service2.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class CursosListaComponent implements OnInit {
   deleteModalRef?: BsModalRef;
   cursoSelecionado?: Curso;
 
-  constructor( private cursoService: CursosService,
+  constructor( private cursoService: CusrsoService2Service,
                private alert: AlertModelServiceService,
                private router: Router,
                private modalService: BsModalService,
@@ -72,7 +73,7 @@ export class CursosListaComponent implements OnInit {
     this.cursoSelecionado = curso;
     // this.deleteModalRef = this.modalService.show(this.deleteModal, { class: 'modal-sm' });
 
-    const result$ = this.alert.showConfirm('Confirmacao', 'Tem certeza que deseja remover esse curso?');
+    const result$ = this.alert.showConfirm('Confirmação', 'Tem certeza que deseja remover esse curso?');
     result$?.asObservable()
     .pipe(
       take(1),
