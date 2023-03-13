@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
+import { filterResponse, uploadProgress } from 'src/app/shared/rxjs.operators';
 import { UploadFileService } from '../upload-file.service';
 
 
@@ -11,7 +12,7 @@ import { UploadFileService } from '../upload-file.service';
 export class UploadFileComponent  {
   private readonly API = 'http://localhost:4200/';
  files?: Set<File>;
-
+ progress = 0;
  constructor(private service: UploadFileService) { }
 
  onChange(event: any) {
@@ -28,7 +29,7 @@ export class UploadFileComponent  {
 
 
   }
-
+  this.progress = 0;
 
 }
 
@@ -38,12 +39,12 @@ export class UploadFileComponent  {
 
       this.service.upload(this.files, this.API + 'api/upload')
         .pipe(
-          tap(console.log)
-          // uploadProgress(progress => {
-          //   console.log(progress);
-          //   this.progress = progress;
-          // }),
-          // filterResponse()
+          tap(console.log),
+          uploadProgress(progress => {
+            console.log(progress);
+            this.progress = progress;
+          }),
+          filterResponse()
         )
         .subscribe(response => {
 
