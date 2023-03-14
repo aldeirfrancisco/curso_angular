@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', pathMatch: 'full', redirectTo: 'upload'
+    path: '', pathMatch: 'full', redirectTo: 'busca-reativa'
   },
   { path: 'cursos',
    loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule)
@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'upload',
     loadChildren: () => import('./upload-file/upload-file.module').then(m => m.UploadFileModule)
   },
+  {
+    path: 'busca-reativa',
+    loadChildren: () => import('./reeact-search/reeact-search.module').then(m => m.ReeactSearchModule)
+  }
 
 ];
 

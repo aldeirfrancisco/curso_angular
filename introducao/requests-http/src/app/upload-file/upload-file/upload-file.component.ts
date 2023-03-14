@@ -33,15 +33,27 @@ export class UploadFileComponent  {
 
 }
 
+onDownloadExcel() {
+  this.service.download( this.API + 'api/downloadExcel')
+  .subscribe((res: any) => {
+    this.service.handleFile(res, 'report.xlsx');
+  });
+}
+
+onDownloadPDF() {
+  this.service.download( this.API + 'api/downloadPDF')
+  .subscribe((res: any) => {
+    this.service.handleFile(res, 'report.pdf');
+  });
+}
+
   onUpload(){
     if (this.files && this.files.size > 0) {
       console.log(" this.files 1 ", this.files);
 
       this.service.upload(this.files, this.API + 'api/upload')
         .pipe(
-          tap(console.log),
           uploadProgress(progress => {
-            console.log(progress);
             this.progress = progress;
           }),
           filterResponse()
