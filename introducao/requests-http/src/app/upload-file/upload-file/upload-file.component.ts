@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { filterResponse, uploadProgress } from 'src/app/shared/rxjs.operators';
 import { UploadFileService } from '../upload-file.service';
 
